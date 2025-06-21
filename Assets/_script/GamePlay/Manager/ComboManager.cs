@@ -5,11 +5,11 @@ using UnityEngine;
 public class ComboManager : MonoBehaviour
 {
     int _comboIndex = 0;
-    [SerializeField] BGMusicManager _music;
     [SerializeField] TextMeshProUGUI _comboText,_perfectCombo;
     Sequence _mySequence;
     Tween _perfectEffect;
     [SerializeField] ScoreManager _score;
+    [SerializeField] Color _perfect, _great, _good;
 
     private void Start()
     {
@@ -31,6 +31,7 @@ public class ComboManager : MonoBehaviour
             case HitResult.perfect:
                 _comboIndex++;
                 ComboEffect("perfect");
+                SetColor(_comboText,_perfect);
                 PerfectEffect(_comboIndex);
                 if (_comboIndex >= 1) {
                     {
@@ -38,9 +39,11 @@ public class ComboManager : MonoBehaviour
                         
                     } }  break;
             case HitResult.great:
+                SetColor(_comboText, _great);
                 ResetCombo();
                 ComboEffect("great"); break;
             case HitResult.good:
+                SetColor(_comboText, _good);
                 ResetCombo();
                 ComboEffect("good"); break;
         }
@@ -82,15 +85,19 @@ public class ComboManager : MonoBehaviour
 
     HitResult CheckResult(float _hitStamp)
     {
-        var currentTime = _music._curentTime;
+        var currentTime = BGMusic.Instance._source.time;
         var delta = Mathf.Abs(currentTime - _hitStamp);
-        if (delta <= .2f) return HitResult.perfect;
-        else if (delta <= .5f) return HitResult.great;
+        if (delta <= .1f) return HitResult.perfect;
+        else if (delta <= .3f) return HitResult.great;
         else return HitResult.good;
     }
     private void OnDisable()
     {
         transform.DOKill();
+    }
+    void SetColor(TextMeshProUGUI _text, Color color)
+    {
+        _text.color = color;
     }
 }
 public enum HitResult

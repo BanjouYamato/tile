@@ -5,11 +5,10 @@ using UnityEngine;
 public class TileFall : MonoBehaviour
 {
     [SerializeField]List<RectTransform> tiles = new();
-    [SerializeField] BGMusicManager _music;
     [SerializeField] AudioClip _clip;
     float speed;
     public float Speed => speed;
-    [SerializeField] SpawnTileManager _spawn;
+    [SerializeField] SpawnTile _spawn;
     public SpeedData _speedData;
     public float multipleIndex;
     private void Start()
@@ -44,7 +43,7 @@ public class TileFall : MonoBehaviour
     }
     void Init()
     {
-        _clip = _music.Source.clip;
+        _clip = BGMusic.Instance._source.clip;
         _speedData = new SpeedData(_clip.length,_spawn._beat._data.Count);
         speed = (_spawn._spawnY.position.y - _spawn._hitY)/_speedData.fallTime;
     }

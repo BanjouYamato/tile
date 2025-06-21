@@ -12,6 +12,7 @@ public abstract class BaseTile : MonoBehaviour, IPool
     protected TilePooling _pool;
     [SerializeField] protected float _hitTime;
     protected VFXPool _vfxPool;
+    [SerializeField] protected RectTransform _canvas;
     protected void Start()
     {
         GameState.OnReady += ResetGame;
@@ -36,18 +37,23 @@ public abstract class BaseTile : MonoBehaviour, IPool
             
         }
     }
-    public void SetUp(float _y, TilePooling pool, float hitTime, VFXPool vfx)
+    public void SetUp(float _y, TilePooling pool, float hitTime, RectTransform _canvas)
     {
         bottomY = _y;
         this._pool = pool;
         this._hitTime = hitTime;
-        _vfxPool = vfx;
+        this._canvas = _canvas;
+        var rect = GetComponent<RectTransform>();
+        var screenHeight = _canvas.rect.height;
+        var newHeight = screenHeight * 0.25f;
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, newHeight);
     }
     protected void LoseEffect()
     {
         Image _color = transform.GetComponent<Image>();
         _color.DOFade(0f, 0.2f).SetLoops(20, LoopType.Yoyo);
         SFXManager.Instance.PlaySfx(_clip);
+        ResetGame();
     }
     protected void OnDisable()
     {

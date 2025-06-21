@@ -12,13 +12,16 @@ public class UIGame : MonoBehaviour
     [SerializeField] ScoreManager ScoreManager;
     [SerializeField] AudioClip _clip;
     [SerializeField] Button _startButton;
-    
+    [SerializeField] RectTransform canvas;
         
     private void Start()
     {   
         GameState.OnGameOver += SetGOV;
         GameState.OnReady += GetReady;
         GameState.OnStart += GetStart;
+        var newHeight = canvas.sizeDelta.y * 0.25f;
+        var rect = _startButton.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, newHeight);
     }
     private void OnDestroy()
     {
@@ -65,8 +68,8 @@ public class UIGame : MonoBehaviour
     }
     public void RestartGame()
     {
-        /*GameState.Instance.SelectState(State.ready);
-        _gov.SetActive(false);*/
+        GameState.Instance.SelectState(State.ready);
+        _gov.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -53,14 +53,7 @@ public class CatchBeatManager : MonoBehaviour
             _beat._data.Add(newTile);
             _input = false;
         }
-        /*if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            Debug.Log("nhung");
-            var newTile = new BeatTileData();
-            newTile._isDup = true;
-            newTile.SetType();
-            _beat._data.Add(newTile);
-        }*/
+        
     }
     private void SaveNewBeat()
     {

@@ -31,7 +31,8 @@ public class GameState : MonoBehaviour
                 OnReady.Invoke();
                 break;
             case State.play:
-                OnPlayHandle(); break;
+                OnPlayHandle();
+                break;
             case State.gameover:
                 OnGameOverHandle(); break;
         }

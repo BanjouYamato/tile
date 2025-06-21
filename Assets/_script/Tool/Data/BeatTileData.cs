@@ -8,7 +8,6 @@ public class BeatTileData
     public float _startTime;
     public float _endTime;
     public TileType _type;
-
     public void SetType()
     {
         if(_endTime - _startTime > 0.2f)
